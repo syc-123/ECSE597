@@ -1,0 +1,11 @@
+InitiateCircuit
+% cursine('1','0',1,1e9,0)
+cur('I1','1','0','type','TRANSIENT','Val_Dc',0,'AMPLITUDE',1,'FREQUENCY',1e9)
+res('Rs1','1','0',1)
+cap('C1','1','0',0.1e-9)
+res('R1','1','2',1)
+cap('C2','2','0',0.1e-9)
+res('R2','2','3',1)
+cap('C3','3','0',0.1e-9)
+res('R3','3','4',1)
+cap('C4','4','0',0.1e-9)

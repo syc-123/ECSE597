@@ -1,0 +1,49 @@
+function Cmat = makeCmatrix()
+
+global elementList nodeMap
+
+n = elementList.n;
+Cmat = sparse(n,n);
+
+
+% add stamps here...
+
+
+Gmat = sparse(elementList.n,elementList.n);
+
+% add stamp for resistors
+
+for I=1:elementList.Resistors.numElements
+    
+    % access nodes Numbers of the Resistor
+    %nodes of a I^{th} element are located in Row I of the nodeNumbers
+    %field
+    
+    nodes = elementList.Resistors.nodeNumbers(I,:);
+
+    % get the conductance for the resisitor
+    % resistance is stored in the field named value
+    g = 1/( elementList.Resistors.value(I));
+    
+    if(nodes(1)~=0) && (nodes(2)~=0)
+        Gmat(nodes(1),nodes(1)) = Gmat(nodes(1),nodes(1))  + g;
+        Gmat(nodes(1),nodes(2)) = Gmat(nodes(1),nodes(2)) - g;
+        Gmat(nodes(2),nodes(1)) = Gmat(nodes(2),nodes(1)) - g;
+        Gmat(nodes(2),nodes(2)) = Gmat(nodes(2),nodes(2)) + g;
+    elseif (nodes(1)==0) && (nodes(2)~=0)
+        
+        Gmat(nodes(2),nodes(2)) = Gmat(nodes(2),nodes(2)) + g;
+        
+    elseif (nodes(1)~=0) && (nodes(2)==0)
+        Gmat(nodes(1),nodes(1)) = Gmat(nodes(1),nodes(1))  + g;
+    end
+    
+end
+
+
+% for inductors 
+for I=1:elementList.Inductors.numElements
+    
+end
+
+% add stamp for other elelemnts here 
